@@ -1,0 +1,31 @@
+{
+  "license": "UNKNOWN",
+  "source": "UNKNOWN",
+  "dependencies": [
+
+  ],
+  "types": [
+
+  ],
+  "project_page": "UNKNOWN",
+  "description": "UNKNOWN",
+  "summary": "Installs mongodb to a location you define in the params.pp file",
+  "author": "Brian Carpio",
+  "version": "0.0.2",
+  "name": "bcarpio-mongodb",
+  "checksums": {
+    "manifests/params.pp": "8bccd2032294c26b600839f07101840c",
+    "metadata.json": "d34d0b70aba36510fbc2df4e667479ef",
+    "spec/spec.opts": "a600ded995d948e393fbe2320ba8e51c",
+    "templates/etc/init/mongodb.conf.erb": "9d2deec9482f07dbab62b737d030bcab",
+    "files/etc/init.d/mongodb": "7a8daad2e500ed78f87d11f565f869dd",
+    "README": "3398ecc0306ad1049c95a31a340ed6a0",
+    "spec/spec_helper.rb": "ca19ec4f451ebc7fdb035b52eae6e909",
+    "templates/etc/mongodb.conf.erb": "602f913161acf67a6ab06a2b1810cd73",
+    "tests/init.pp": "c29e4762855114f0111961d495abcf65",
+    "files/mongodb-linux-x86_64-1.8.5.tgz": "b683fb2078123f7236ccc5e66d01153b",
+    "manifests/init.pp": "05874094d1e77452667add999993d061",
+    "Modulefile": "439380499a33e9c416408fcd070920d9",
+    "files/mongodb-linux-x86_64-2.0.4.tgz": "762cbf18aec0f01869bb4ec3585aee7a"
+  }
+}

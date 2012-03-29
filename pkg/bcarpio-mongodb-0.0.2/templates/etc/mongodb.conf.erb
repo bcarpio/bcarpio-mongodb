@@ -1,0 +1,8 @@
+#################
+#    PUPPET     #
+#################
+logpath=/var/log/mongodb/mongodb.log
+logappend = true
+dbpath = <%= scope.lookupvar('mongodb::params::dbpath') %>
+nojournal = <%= scope.lookupvar('mongodb::params::journal') %>
+replSet = <%= scope.lookupvar('mongodb::params::replSet') %>
