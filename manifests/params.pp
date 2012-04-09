@@ -3,6 +3,7 @@
 class mongodb::params {
 
 	$dbpath = $::hostname ? {
+		/arch-mongod.*/		=> "/data/db.1/",
 		default				=> "/var/lib/mongodb",
 	}	
 
@@ -15,10 +16,13 @@ class mongodb::params {
 	}
 
 	$journal = $::hostname ? {
+		/arch-mongod.*/		=> "true",
 		default				=> "true",
 	}
 
 	$replSet = $::hostname ? {
+		/arch-mongod-s1.*/		=> "set01",
+		/arch-mongod-s2.*/		=> "set02",
 		default					=> "mongo",
 	}
 
@@ -26,6 +30,8 @@ class mongodb::params {
 		default				=> "/opt/mongodb",
 	}
 	$mongodb_version = $::hostname ? {
+		/arch-mongod-s1.*/	=> "2.0.4",
+		/arch-mongod-s2.*/	=> "1.8.5",
 		default				=> "2.0.4",
 	}
 }

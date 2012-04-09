@@ -1,8 +1,8 @@
 # /etc/puppet/modules/mongodb/manifests/init.pp
 
-class mongodb {
+class mongodb::install {
 
-	require mongodb::params
+	include mongodb::params
 
 	group { "mongodb":
 		ensure => present,
@@ -20,41 +20,7 @@ class mongodb {
 		require => Group["mongodb"]
 	}
 
-	file { "/etc/mongodb.conf":
-		ensure => present,
-		owner => "mongodb",
-		group => "mongodb",
-		mode  => 440,
-		alias => "etc-mongodb-conf",
-		content => template("mongodb/etc/mongodb.conf.erb")
-	}
-
-	file { "/etc/init/mongodb.conf":
-		ensure => "present",
-		owner => "root",
-		group => "root",
-		mode  => 644,
-		alias => "etc-init-mongodb-conf",
-		content => template("mongodb/etc/init/mongodb.conf.erb"),
-	}
-	
-	file { "/etc/init.d/mongodb":
-		ensure => "present",
-		owner => "root",
-		group => "root",
-		mode  => 744,
-		alias => "etc-initd-mongodb-conf",
-		source => "puppet:///modules/mongodb/etc/init.d/mongodb",
-	}
-	
-	file { "$mongodb::params::dbpath":
-		ensure => "directory",
-		owner => "mongodb",
-		group => "mongodb",
-		mode => 0644,
-		alias => "mongodb-data-dir",
-	}
-        file {"$mongodb::params::install_base":
+    file {"$mongodb::params::install_base":
 		ensure => "directory",
 		owner => "root",
 		group => "root",
@@ -97,12 +63,50 @@ class mongodb {
 		group => "mongodb",
 		require => File["mongodb-source-tgz"],
 	}
+
+}
+
+class mongodb::config {
+	include mongodb::params
+	
+    File{
+        require => Class["mongodb::install"],
+        owner   => "mongodb",
+        group   => "mongodb",
+        mode    => 644
+    }
+
+	file { "/etc/mongodb.conf":
+		ensure => present,
+		alias => "etc-mongodb-conf",
+		content => template("mongodb/etc/mongodb.conf.erb")
+	}
+
+	file { "/etc/init/mongodb.conf":
+		ensure => "present",
+		owner => "root",
+		group => "root",
+		mode  => 644,
+		alias => "etc-init-mongodb-conf",
+		content => template("mongodb/etc/init/mongodb.conf.erb"),
+	}
+	
+	file { "/etc/init.d/mongodb":
+		ensure => "present",
+		owner => "root",
+		group => "root",
+		mode  => 744,
+		alias => "etc-initd-mongodb-conf",
+		source => "puppet:///modules/mongodb/etc/init.d/mongodb",
+	}
+	
+	file { "$mongodb::params::dbpath":
+		ensure => "directory",
+		alias => "mongodb-data-dir",
+	}
 	
 	file { "/var/log/mongodb/":
 		ensure => "directory",
-		owner => "mongodb",
-		group => "mongodb",
-		mode => 0644,
 		alias => "mongodb-log-dir",
 		before => File["/var/log/mongodb/mongodb.log"]
 	}
@@ -113,5 +117,8 @@ class mongodb {
 		group => "mongodb",
 		mode => 644,
 	}	
-		
 }
+
+class mongodb {
+	include mongodb::install, mongodb::config, mongodb::params
+}	
